@@ -1,8 +1,18 @@
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function Detail() {
   const {
-    query: { id },
+    query: { id, title },
   } = useRouter();
-  return id ? id : null;
+  useEffect(() => {
+    (async () => {
+      const data = await (await fetch(`/api/movies/${id}`)).json();
+    })();
+  });
+  return (
+    <div>
+      <h4>{title || "Loading..."}</h4>
+    </div>
+  );
 }
